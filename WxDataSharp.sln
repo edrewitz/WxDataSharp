@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.14.36616.10 d17.14
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WxDataSharp", "WxDataSharp\WxDataSharp.csproj", "{05BE8B7C-BDF5-4627-9CCC-C8901AE3B71C}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{05BE8B7C-BDF5-4627-9CCC-C8901AE3B71C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{05BE8B7C-BDF5-4627-9CCC-C8901AE3B71C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{05BE8B7C-BDF5-4627-9CCC-C8901AE3B71C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{05BE8B7C-BDF5-4627-9CCC-C8901AE3B71C}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {8245B143-00D6-4CB3-8033-172C31CE6FC6}
+	EndGlobalSection
+EndGlobal
