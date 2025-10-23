@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using WxDataSharp.Utilities;
 
-namespace WxDataSharp.ECMWF
+namespace WxDataSharp.ECMWFAIFS
 {
 
 
