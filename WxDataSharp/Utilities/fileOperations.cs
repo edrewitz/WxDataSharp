@@ -1,4 +1,10 @@
-﻿using System;
+﻿/*
+ * This file hosts the class that manage a local file directory. 
+ * 
+ * (C) Eric J. Drewitz 2025
+ */
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -14,6 +20,21 @@ namespace WxDataSharp.Utilities
 
         public static void DeleteFiles(string fullPath, string displayPath)
         {
+            /*
+             * This function deletes old data files in a directory prior to downloading new data.
+             * 
+             * Required Arguments:
+             * 
+             * 1) string fullPath - The full system path to the directory containing the files to be deleted.
+             * 
+             * 2) string displayPath - A user-friendly path representation for logging purposes.
+             * 
+             * Returns
+             * -------
+             * 
+             * Deletes all contents in a specified directory. 
+             */
+
             if (Directory.Exists(fullPath))
             {
                 string[] filePaths = Directory.GetFiles(fullPath);

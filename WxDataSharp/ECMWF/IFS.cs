@@ -1,5 +1,5 @@
 ﻿/*
- * This file hosts the class that download and store ECMWF AIFS data. 
+ * This file hosts the class that download and store ECMWF IFS data. 
  * 
  * (C) Eric J. Drewitz 2025
  */
@@ -12,47 +12,32 @@ using System.Threading.Tasks;
 using WxDataSharp.Utilities;
 using WxDataSharp.Client;
 
-namespace WxDataSharp.ECMWFAIFS
+namespace WxDataSharp.ECMWFIFS
 {
-
-
-    public class ECMWFAIFS
+    public class ECMWFIFS
     {
 
-        /*
-        This public class contains the following:
-
-        public functions:
-
-        1) Task DownloadECMWFAIFS 
-
-        private functions:
-
-        1) Task DownloadFileAsync
-
-        */
-
-
-        public static async Task DownloadECMWFAIFS(int finalForecastHour)
+        public static async Task DownloadECMWFIFS(int step, int finalForecastHour)
         {
             /*
             This function does the following:
             
-            1) Downloads the latest available ECMWF AIFS data
+            1) Downloads the latest available ECMWF IFS data
 
-            2) Saves the ECMWF AIFS data to f:ECMWF/AIFS/{fileName}
+            2) Saves the ECMWF IFS data to f:ECMWF/IFS/{fileName}
 
             Required Arguments:
 
-            1) int finalForecastHour - The final forecast hour to download. Must be a multiple of 6.
+            1) int step - The forecast step interval. Must be 3 or 6. 
+
+            2) int finalForecastHour - The final forecast hour to download. Must be a multiple of 3 or 6 before 144 hours and 6 after 144 hours.
 
             Optional Arguments: None
 
             Returns
             -------
 
-            ECMWF AIFS data files saved to f:ECMWF/AIFS/{fileName}
-
+            ECMWF IFS data files saved to f:ECMWF/IFS/{fileName}
             */
 
             DateTime utcNow = DateTime.UtcNow;
@@ -61,44 +46,61 @@ namespace WxDataSharp.ECMWFAIFS
             string run = "";
             DateTime time = utcNow;
 
-            if ((hour >= 6) && (hour < 12))
+            if ((hour >= 8) && (hour < 20))
             {
                 run = "00";
             }
-            else if ((hour >= 12) && (hour < 18))
-            {
-                run = "06";
-            }
-            else if ((hour >= 18) && (hour < 24))
+            else if ((hour >= 20) && (hour < 24))
             {
                 run = "12";
             }
             else
             {
-                run = "18";
+                run = "12";
                 time = yDay;
             }
 
             List<string> url_list = [];
 
-            for (int i = 0; i < (finalForecastHour + 6); i += 6)
+            if (finalForecastHour >= 144)
             {
-                string u = $"https://data.ecmwf.int/forecasts/{time.ToString("yyyyMMdd")}/{run}z/aifs-single/0p25/oper/{time.ToString("yyyyMMdd")}{run}0000-{i}h-oper-fc.grib2";
 
-                url_list.Add(u);
+                for (int i = 0; i < (finalForecastHour + step); i += step)
+                {
+                    string u = $"https://data.ecmwf.int/forecasts/{time.ToString("yyyyMMdd")}/{run}z/ifs/0p25/oper/{time.ToString("yyyyMMdd")}{run}0000-{i}h-oper-fc.grib2";
+
+                    url_list.Add(u);
+                }
+            }
+            else
+            {
+                for (int i = 0; i < (144 + step); i += step)
+                {
+                    string u = $"https://data.ecmwf.int/forecasts/{time.ToString("yyyyMMdd")}/{run}z/ifs/0p25/oper/{time.ToString("yyyyMMdd")}{run}0000-{i}h-oper-fc.grib2";
+
+                    url_list.Add(u);
+                }
+
+                for (int i = 144; i < (finalForecastHour + 6); i += 6)
+                {
+                    string u = $"https://data.ecmwf.int/forecasts/{time.ToString("yyyyMMdd")}/{run}z/ifs/0p25/oper/{time.ToString("yyyyMMdd")}{run}0000-{i}h-oper-fc.grib2";
+
+                    url_list.Add(u);
+                }
+
             }
 
-            List<string> file_list = [];
+                List<string> file_list = [];
 
-            for (int i = 0; i < (finalForecastHour + 6); i += 6)
+            for (int i = 0; i < (finalForecastHour + step); i += step)
             {
                 string f = $"{time.ToString("yyyyMMdd")}{run}0000-{i}h-oper-fc.grib2";
                 file_list.Add(f);
             }
 
             string directoryPath = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile);
-            string folderName = $"Weather Data/ECMWF/AIFS/";
-            string displayFolderName = $@"Weather Data\ECMWF\AIFS\";
+            string folderName = $"Weather Data/ECMWF/IFS/";
+            string displayFolderName = $@"Weather Data\ECMWF\IFS\";
             string fullPath = Path.Combine(directoryPath, folderName);
             string displayPath = Path.Combine(directoryPath, displayFolderName);
 
@@ -162,5 +164,4 @@ namespace WxDataSharp.ECMWFAIFS
         }
 
     }
-
 }
