@@ -62,7 +62,8 @@ namespace WxDataSharp.ECMWFIFS
 
             List<string> url_list = [];
 
-            if (finalForecastHour >= 144)
+
+            if (finalForecastHour <= 144)
             {
 
                 for (int i = 0; i < (finalForecastHour + step); i += step)
@@ -89,8 +90,8 @@ namespace WxDataSharp.ECMWFIFS
                 }
 
             }
-
-                List<string> file_list = [];
+                
+            List<string> file_list = [];
 
             for (int i = 0; i < (finalForecastHour + step); i += step)
             {
