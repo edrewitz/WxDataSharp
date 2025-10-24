@@ -93,10 +93,28 @@ namespace WxDataSharp.ECMWFIFS
                 
             List<string> file_list = [];
 
-            for (int i = 0; i < (finalForecastHour + step); i += step)
+            if (finalForecastHour <= 144)
             {
-                string f = $"{time.ToString("yyyyMMdd")}{run}0000-{i}h-oper-fc.grib2";
-                file_list.Add(f);
+                for (int i = 0; i < (finalForecastHour + step); i += step)
+                {
+                    string f = $"{time.ToString("yyyyMMdd")}{run}0000-{i}h-oper-fc.grib2";
+                    file_list.Add(f);
+                }
+            }
+            else
+            {
+                for (int i = 0; i < (144 + step); i += step)
+                {
+                    string f = $"{time.ToString("yyyyMMdd")}{run}0000-{i}h-oper-fc.grib2";
+                    file_list.Add(f);
+                }
+
+                for (int i = 144; i < (finalForecastHour + 6); i += 6)
+                {
+                    string f = $"{time.ToString("yyyyMMdd")}{run}0000-{i}h-oper-fc.grib2";
+                    file_list.Add(f);
+                }
+
             }
 
             string directoryPath = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile);
